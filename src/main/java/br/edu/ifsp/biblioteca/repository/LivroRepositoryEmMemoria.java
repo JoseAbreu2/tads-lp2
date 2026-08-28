@@ -82,7 +82,7 @@ public class LivroRepositoryEmMemoria implements ILivroRepository{
         for (int i = 0; i < colecaoLivros.size(); i++){
 
             Livro l = colecaoLivros.get(i);
-            if (l.getTitulo().contains(titulo)){
+            if (l.getTitulo().toLowerCase().contains(titulo.toLowerCase())){
                livrosSelecionados.add(l);
             }
 
