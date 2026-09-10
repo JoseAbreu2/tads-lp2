@@ -6,8 +6,7 @@ public class Usuario {
     private String nome;
     private String email;
 
-    public Usuario(Long id, String nome, String email) {
-        this.id = id;
+    public Usuario(String nome, String email) {
         this.nome = nome;
         this.email = email;
     }
@@ -35,6 +34,8 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 
     @Override
     public String toString() {
