@@ -52,11 +52,11 @@ public class Livro {
         this.anoPublicacao = anoPublicacao;
     }
 
-    public void adicionarExemplar(Exemplar item){
+    public void adicionarExemplar(Exemplar item) {
         this.listaDeExemplares.add(item);
     }
 
-    public void adicionarAutor(Autor autor){
+    public void adicionarAutor(Autor autor) {
         this.autores.add(autor);
     }
 
@@ -69,5 +69,4 @@ public class Livro {
                 ", anoPublicacao=" + anoPublicacao +
                 '}';
     }
-
 }

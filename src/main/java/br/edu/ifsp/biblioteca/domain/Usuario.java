@@ -35,8 +35,6 @@ public class Usuario {
         this.email = email;
     }
 
-
-
     @Override
     public String toString() {
         return "Usuario{" +

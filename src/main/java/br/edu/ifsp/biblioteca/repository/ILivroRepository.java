@@ -5,8 +5,6 @@ import br.edu.ifsp.biblioteca.domain.Livro;
 import java.util.List;
 import java.util.Optional;
 
-// serve para armazenar os objetos em algum lugar
-
 public interface ILivroRepository {
 
     Livro salvar(Livro livro);
@@ -18,6 +16,4 @@ public interface ILivroRepository {
     Optional<Livro> buscarPorIsbn(String isbn);
 
     List<Livro> buscarPorTitulo(String titulo);
-
-
 }

@@ -1,17 +1,22 @@
 package br.edu.ifsp.biblioteca.repository;
 
 import br.edu.ifsp.biblioteca.domain.Usuario;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-public class UsuarioRepositoryEmMemoria implements IUsuarioRepository{
+@Repository
+@Profile("memoria")
+public class UsuarioRepositoryEmMemoria implements IUsuarioRepository {
 
     private final Map<Long, Usuario> usuarios = new HashMap<>();
     private Long sequenciaId = 0L;
 
     @Override
     public Usuario salvar(Usuario usuario) {
-        if (usuario.getId() == null){
+
+        if (usuario.getId() == null) {
             usuario.setId(++this.sequenciaId);
         }
 
@@ -22,9 +27,10 @@ public class UsuarioRepositoryEmMemoria implements IUsuarioRepository{
     @Override
     public Optional<Usuario> buscarPorId(Long id) {
 
-        if (this.usuarios.containsKey(id)){
+        if (this.usuarios.containsKey(id)) {
             return Optional.of(this.usuarios.get(id));
         }
+
         return Optional.empty();
     }
 
@@ -32,11 +38,12 @@ public class UsuarioRepositoryEmMemoria implements IUsuarioRepository{
     public Optional<Usuario> buscarPorEmail(String email) {
 
         List<Usuario> listaDeUsuarios = new ArrayList<>(this.usuarios.values());
-        for (int i = 0; i < listaDeUsuarios.size(); i++){
+
+        for (int i = 0; i < listaDeUsuarios.size(); i++) {
 
             Usuario item = listaDeUsuarios.get(i);
 
-            if (item.getEmail().equals(email)){
+            if (item.getEmail().equals(email)) {
                 return Optional.of(item);
             }
         }
@@ -46,6 +53,7 @@ public class UsuarioRepositoryEmMemoria implements IUsuarioRepository{
 
     @Override
     public List<Usuario> listarTodos() {
+
         List<Usuario> listaDeUsuarios = new ArrayList<>(this.usuarios.values());
         return listaDeUsuarios;
     }

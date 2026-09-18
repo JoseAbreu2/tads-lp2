@@ -1,19 +1,22 @@
 package br.edu.ifsp.biblioteca.repository;
 
 import br.edu.ifsp.biblioteca.domain.Livro;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-public class LivroRepositoryEmMemoria implements ILivroRepository{
+@Repository
+@Profile("memoria")
+public class LivroRepositoryEmMemoria implements ILivroRepository {
 
-
-    private final Map<Long, Livro> livros = new HashMap<>();
+    private final Map<Long, Livro> livros = new HashMap<Long, Livro>();
     private Long sequenciaId = 0L;
 
     @Override
     public Livro salvar(Livro livro) {
 
-        if (livro.getId() == null){
+        if (livro.getId() == null) {
             this.sequenciaId = this.sequenciaId + 1;
             livro.setId(this.sequenciaId);
         }
@@ -26,26 +29,24 @@ public class LivroRepositoryEmMemoria implements ILivroRepository{
     @Override
     public List<Livro> listarTodos() {
 
-        List<Livro> colecaoLivros = new ArrayList<>(this.livros.values());
+        return new ArrayList<>(this.livros.values());
 
-        return colecaoLivros;
+//        List<Livro> colecaoLivros = new ArrayList<>(this.livros.values());
+//        return colecaoLivros;
+
+
+//        List<Livro> todosOsLivros = new ArrayList<>();
+//
+//        for (Livro livro : this.livros.values()) {
+//            todosOsLivros.add(livro);
+//        }
+//
+//        return todosOsLivros;
     }
 
     @Override
     public Optional<Livro> buscarPorId(Long id) {
-
         return Optional.ofNullable(this.livros.get(id));
-
-        // Usando o operador ternário
-        //Livro l = this.livros.get(id);
-        //return l == null ? Optional.empty() : Optional.of(l);
-
-        // usando if's
-        //if (l == null){
-        //    return Optional.empty();
-       // }
-
-       // return Optional.of(l);
     }
 
     @Override
@@ -53,22 +54,15 @@ public class LivroRepositoryEmMemoria implements ILivroRepository{
 
         List<Livro> colecaoLivros = new ArrayList<>(this.livros.values());
 
-        for (int i = 0; i < colecaoLivros.size(); i++){
+        for (int i = 0; i < colecaoLivros.size(); i++) {
 
             Livro livro = colecaoLivros.get(i);
+            String livroIsbn = livro.getIsbn();
 
-            if (livro.getIsbn().equalsIgnoreCase(isbn)){
+            if (livroIsbn.equalsIgnoreCase(isbn)) {
                 return Optional.of(livro);
             }
         }
-
-//        for each
-//        for (Livro livro : colecaoLivros) {
-//
-//            if (livro.getIsbn().equals(isbn)) {
-//                return Optional.of(livro);
-//            }
-//        }
 
         return Optional.empty();
     }
@@ -76,18 +70,17 @@ public class LivroRepositoryEmMemoria implements ILivroRepository{
     @Override
     public List<Livro> buscarPorTitulo(String titulo) {
 
-        List<Livro> colecaoLivros = new ArrayList<>(this.livros.values());
-        List<Livro> livrosSelecionados = new ArrayList<>();
+        List<Livro> encontrados = new ArrayList<>();
 
-        for (int i = 0; i < colecaoLivros.size(); i++){
+        for (Livro livro : this.livros.values()) {
 
-            Livro l = colecaoLivros.get(i);
-            if (l.getTitulo().toLowerCase().contains(titulo.toLowerCase())){
-               livrosSelecionados.add(l);
+            String livroTitulo = livro.getTitulo().toLowerCase();
+
+            if (livroTitulo.contains(titulo.toLowerCase())) {
+                encontrados.add(livro);
             }
-
         }
 
-        return livrosSelecionados;
+        return encontrados;
     }
 }
