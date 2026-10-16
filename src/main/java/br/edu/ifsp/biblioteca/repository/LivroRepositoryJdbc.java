@@ -30,16 +30,24 @@ public class LivroRepositoryJdbc implements ILivroRepository {
         {
             conexao.setAutoCommit(false);
 
-            if (livro.getId() == null) {
-                this.inserirLivro(conexao, livro);
-            } else {
-                this.atualizarLivro(conexao, livro);
+            try {
+                if (livro.getId() == null) {
+                    this.inserirLivro(conexao, livro);
+                } else {
+                    this.atualizarLivro(conexao, livro);
+                }
+
+                this.salvarAutores(conexao, livro);
+                this.salvarExemplares(conexao, livro);
+
+                conexao.commit();
+            } catch (SQLException erro){
+                conexao.rollback();
+                throw erro;
             }
 
-            this.salvarAutores(conexao, livro);
-            this.salvarExemplares(conexao, livro);
-
         } catch (SQLException erro) {
+
             throw new IllegalStateException("Falha ao salvar o livro", erro);
         }
 

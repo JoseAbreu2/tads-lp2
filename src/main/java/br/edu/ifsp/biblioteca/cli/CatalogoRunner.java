@@ -32,7 +32,7 @@ public class CatalogoRunner implements CommandLineRunner {
         System.out.println("=== Biblioteca IFSP - v0 (tudo em memória) ===");
 
         Livro domCasmurro = new Livro(
-            "9788508145607",
+            "9788508145610",
             "Dom Casmurro",
             1899
         );
