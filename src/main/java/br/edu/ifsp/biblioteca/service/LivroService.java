@@ -42,7 +42,7 @@ public class LivroService {
             );
         }
 
-        Livro livroCadastrado = this.livroRepository.salvar(livro);
+        Livro livroCadastrado = this.livroRepository.save(livro);
 
         return livroCadastrado;
     }
