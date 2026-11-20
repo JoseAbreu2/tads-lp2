@@ -36,5 +36,6 @@ public interface ILivroRepository extends JpaRepository<Livro, Long> {
             String trechoTitulo,
             Pageable pagina
     );
+
     List<Livro> findByTitulo(String titulo);
 }

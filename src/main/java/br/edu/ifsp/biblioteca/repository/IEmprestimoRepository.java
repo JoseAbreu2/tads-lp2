@@ -44,7 +44,7 @@ public interface IEmprestimoRepository extends JpaRepository<Emprestimo, Long> {
                     "JOIN FETCH e.usuario "+
                     "JOIN FETCH e.exemplar ex "+
                     "JOIN FETCH ex.livro "+
-                    "WHERE e.dataDevolucao IS NULL AND e.usuario.id = :usuarioId"+
+                    "WHERE e.dataDevolucao IS NULL AND e.usuario.id = :usuarioId "+
                     "ORDER BY e.dataPrevistaDevolucao "
     )
     List<Emprestimo> listarAtivosDoUsuarioComDetalhes(@Param("usuarioId") Long usuarioId);

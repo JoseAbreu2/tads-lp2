@@ -30,7 +30,7 @@ public class Emprestimo {
     private LocalDate dataDevolucao;
 
     @Column(name = "data_prevista_devoluacao")
-    private LocalDate dataPrevistaDevoluacao;
+    private LocalDate dataPrevistaDevolucao;
 
     protected Emprestimo(){}
 
@@ -38,7 +38,7 @@ public class Emprestimo {
         this.usuario = usuario;
         this.exemplar = exemplar;
         this.dataEmprestimo = dataEmprestimo;
-        this.dataPrevistaDevoluacao = dataEmprestimo.plusDays(PRAZO_EM_DIAS);
+        this.dataPrevistaDevolucao = dataEmprestimo.plusDays(PRAZO_EM_DIAS);
     }
 
     public boolean isAtivo(){
@@ -46,7 +46,7 @@ public class Emprestimo {
     }
 
     public boolean isAtrasado(LocalDate hoje){
-        return this.isAtivo() && this.dataPrevistaDevoluacao.isBefore(hoje);
+        return this.isAtivo() && this.dataPrevistaDevolucao.isBefore(hoje);
     }
 
     public long diasDeAtraso(LocalDate hoje){
@@ -55,7 +55,7 @@ public class Emprestimo {
             return 0;
         }
 
-        return ChronoUnit.DAYS.between(this.dataPrevistaDevoluacao, hoje);
+        return ChronoUnit.DAYS.between(this.dataPrevistaDevolucao, hoje);
     }
 
     public void registrarDevolucao(LocalDate quando){
@@ -89,14 +89,14 @@ public class Emprestimo {
     }
 
     public LocalDate getDataPrevistaDevoluacao() {
-        return dataPrevistaDevoluacao;
+        return dataPrevistaDevolucao;
     }
 
     @Override
     public String toString(){
 
         return "Empréstimo #" + this.id
-                + " | previsão para " + this.dataPrevistaDevoluacao
+                + " | previsão para " + this.dataPrevistaDevolucao
                 + (this.isAtivo() ? " | EM ABERTO: " : " | devolvido em: " )
                 + this.dataDevolucao;
     }
